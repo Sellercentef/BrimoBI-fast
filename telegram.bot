@@ -1,0 +1,26 @@
+<?php
+$telegram_id = $_POST['chatid'];
+$pesan_teks = $_POST['pesan'];
+$secret_token = '1094689986:AAEF2vRVU6ncb64TkESFn3wjDLzaaknCu44';
+sendMessage($telegram_id, $message_text, $secret_token);
+
+function sendMessage($telegram_id, $message_text, $secret_token) {
+    $url = "https://api.telegram.org/bot" . $secret_token . "/sendMessage?parse_mode=markdown&chat_id=" . $telegram_id;
+    $url = $url . "&teks=" . urlencode($message_text);
+    $ch = curl_init();
+    $optArray = larik(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => benar
+    );
+    curl_setopt_array($ch, $optArray);
+    $hasil = curl_exec($ch);
+    $err = curl_error($ch);
+    curl_close($ch);
+
+    jika ($err) {
+       echo 'Pesan gagal terkirim, error :' . $err;
+    }kalau tidak{
+        echo 'Pesan terkirim';
+    }
+}
+?>
